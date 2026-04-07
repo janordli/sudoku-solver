@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Sudoku Solver</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🧩 Interactive Sudoku Solver</h1>
+        
+        <div class="camera-section">
+            <h3>📸 Take or Upload a Photo</h3>
+            <p>Capture your Sudoku puzzle and the app will extract the numbers for you!</p>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment">
+            <button class="btn btn-info" onclick="document.getElementById('cameraInput').click()">
+                📷 Take/Upload Photo
+            </button>
+            <div id="imagePreview" class="image-preview"></div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📝 How to use:</h3>
+            <ul>
+                <li><strong>Photo:</strong> Take a photo - we'll extract numbers for you to verify</li>
+                <li><strong>Manual:</strong> Tap any cell to enter numbers via number picker</li>
+                <li><strong>Hint:</strong> Get the next logical move when stuck</li>
+                <li><strong>Undo/Redo:</strong> Mistake? Just undo it</li>
+                <li><strong>Save/Load:</strong> Your progress auto-saves every 30 seconds</li>
+            </ul>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box" style="background-color: #e3f2fd;"></div>
+                <span>Given</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background-color: #fff8e1;"></div>
+                <span>Your entries</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background-color: #c8e6c9;"></div>
+                <span>Hint</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background-color: #ffebee;"></div>
+                <span>Errors</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-info" onclick="showHint()">💡 Hint</button>
+            <button class="btn btn-secondary" id="undoBtn" onclick="undo()" disabled>↶ Undo</button>
+            <button class="btn btn-secondary" id="redoBtn" onclick="redo()" disabled>↷ Redo</button>
+            <button class="btn btn-primary" onclick="checkValidity()">🔍 Check</button>
+            <button class="btn btn-success" onclick="solvePuzzle()">✨ Solve</button>
+            <button class="btn btn-secondary" onclick="savePuzzle()">💾 Save</button>
+            <button class="btn btn-secondary" onclick="loadPuzzle()">📂 Load</button>
+            <button class="btn btn-warning" onclick="clearAll()">🗑️ Clear</button>
+        </div>
+        
+        <div>
+            <label style="font-weight: 600;">
+                <input type="checkbox" id="givenMode"> Mark next entries as "given" numbers
+            </label>
+        </div>
+        
+        <div id="status-container"></div>
+        
+        <div class="grid-container">
+            <div class="grid-section">
+                <h3>📝 Input Your Puzzle</h3>
+                <div id="input-grid" class="sudoku-grid"></div>
+            </div>
+            
+            <div class="grid-section">
+                <h3>🎯 Solution</h3>
+                <div id="solution-grid" class="sudoku-grid"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Number Picker Popup -->
+    <div class="overlay" id="overlay" onclick="closeNumberPicker()"></div>
+    <div class="number-picker" id="numberPicker">
+        <h4>Select Number</h4>
+        <div class="number-grid">
+            <button class="number-btn" onclick="selectNumber(1)">1</button>
+            <button class="number-btn" onclick="selectNumber(2)">2</button>
+            <button class="number-btn" onclick="selectNumber(3)">3</button>
+            <button class="number-btn" onclick="selectNumber(4)">4</button>
+            <button class="number-btn" onclick="selectNumber(5)">5</button>
+            <button class="number-btn" onclick="selectNumber(6)">6</button>
+            <button class="number-btn" onclick="selectNumber(7)">7</button>
+            <button class="number-btn" onclick="selectNumber(8)">8</button>
+            <button class="number-btn" onclick="selectNumber(9)">9</button>
+        </div>
+        <div class="picker-actions">
+            <button onclick="selectNumber(0)" style="background: #dc3545; color: white;">Clear</button>
+            <button onclick="closeNumberPicker()" style="background: #6c757d; color: white;">Cancel</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
